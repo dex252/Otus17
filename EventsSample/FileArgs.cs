@@ -1,4 +1,4 @@
-﻿namespace EventsSample
+namespace EventsSample
 {
     public class FileArgs: EventArgs
     {

@@ -1,10 +1,9 @@
-﻿using System.Diagnostics;
+using System.Diagnostics;
 
 namespace EventsSample
 {
-    public class FilesSearcher :IDisposable
+    public class FilesSearcher : IDisposable
     {
-
         public event EventHandler<FileArgs> FileFound;
 
         public FilesSearcher()
@@ -27,16 +26,43 @@ namespace EventsSample
         {
             if (!isRecursive)
             {
-                FilesSearch(directoryPath);
+                FilesSearch(directoryPath, CancellationToken.None);
                 return;
             }
 
-            RecursiveSearch(directoryPath, maxDepth, 1);
+            RecursiveSearch(directoryPath, CancellationToken.None, maxDepth, 1);
         }
 
-        private void RecursiveSearch(string directoryPath, int maxDepth, int currentDepth)
+        /// <summary>
+        /// Поиск файлов в указанном каталоге
+        /// </summary>
+        /// <param name="directoryPath">Путь к дериктории</param>
+        /// <param name="isRecursive">Рекурсивный поиск</param>
+        /// <param name="maxDepth">Глубина поиска</param>
+        /// <param name="cancellationToken">Токен отмены</param>
+        public void Search(string directoryPath, CancellationToken cancellationToken, bool isRecursive = false, int maxDepth = 1)
         {
-            FilesSearch(directoryPath);
+            try
+            {
+                if (!isRecursive)
+                {
+                    FilesSearch(directoryPath, cancellationToken);
+                    return;
+                }
+
+                RecursiveSearch(directoryPath, cancellationToken, maxDepth, 1);
+            }
+            catch (OperationCanceledException e)
+            {
+                Debug.WriteLine(e.Message);
+                return;
+            }
+            
+        }
+
+        private void RecursiveSearch(string directoryPath, CancellationToken cancellationToken, int maxDepth, int currentDepth)
+        {
+            FilesSearch(directoryPath, cancellationToken);
 
             if (maxDepth < currentDepth)
             {
@@ -48,18 +74,28 @@ namespace EventsSample
                 var allDirectories = Directory.GetDirectories(directoryPath);
                 foreach (var directory in allDirectories)
                 {
-                    RecursiveSearch(directory, maxDepth, currentDepth + 1);
+                    if (cancellationToken.IsCancellationRequested)
+                    {
+                        throw new OperationCanceledException();
+                    }
+
+                    RecursiveSearch(directory, cancellationToken, maxDepth, currentDepth + 1);
                 }
             }, directoryPath);
         }
 
-        private void FilesSearch(string directoryPath)
+        private void FilesSearch(string directoryPath, CancellationToken cancellationToken)
         {
             IsExceptionHandler(() => 
             {
                 var allFiles = Directory.GetFiles(directoryPath);
                 foreach (string file in allFiles)
                 {
+                    if (cancellationToken.IsCancellationRequested)
+                    {
+                        throw new OperationCanceledException();
+                    }
+
                     OnFileFound(file);
                 }
             }, directoryPath);           
@@ -76,8 +112,16 @@ namespace EventsSample
                 if (e is UnauthorizedAccessException)
                 {
                     Debug.WriteLine($"Доступ к директории {directoryPath} ограничен");
+                    return;
                 }
-                return;
+
+                if (e is FileNotFoundException || e is DirectoryNotFoundException)
+                {
+                    Debug.WriteLine($"Путь к файлу или директории {directoryPath} не найден");
+                    return;
+                }
+
+                throw e;
             }
         }
 
