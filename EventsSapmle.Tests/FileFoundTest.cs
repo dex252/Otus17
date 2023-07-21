@@ -23,7 +23,7 @@ namespace EventsSapmle.Tests
         {
             if (!Directory.Exists(directoryPath))
             {
-                Debug.WriteLine($"ѕуть {directoryPath} не существует");
+                Debug.WriteLine($"Путь {directoryPath} не существует");
                 return;
             }
 
