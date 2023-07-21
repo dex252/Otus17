@@ -3,9 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.6.33712.159
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DelegatesSample.Tests", ".\DelegatesSample.Tests\DelegatesSample.Tests.csproj", "{DF0A5EE3-0E6E-47B3-B847-476AE197F785}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DelegatesSample.Tests", "DelegatesSample.Tests\DelegatesSample.Tests.csproj", "{DF0A5EE3-0E6E-47B3-B847-476AE197F785}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DelegatesSample", ".\DelegatesSample\DelegatesSample.csproj", "{5D88A292-566A-4D41-8B65-2488E4AB2EF7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DelegatesSample", "DelegatesSample\DelegatesSample.csproj", "{5D88A292-566A-4D41-8B65-2488E4AB2EF7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventsSample", "EventsSample\EventsSample.csproj", "{AC92808C-EC6B-4E2A-9959-4567725D6E4F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventsSapmle.Tests", "EventsSapmle.Tests\EventsSapmle.Tests.csproj", "{60C9DD35-2ABC-4FFD-8F05-4D3025676122}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +25,14 @@ Global
 		{5D88A292-566A-4D41-8B65-2488E4AB2EF7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5D88A292-566A-4D41-8B65-2488E4AB2EF7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5D88A292-566A-4D41-8B65-2488E4AB2EF7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AC92808C-EC6B-4E2A-9959-4567725D6E4F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AC92808C-EC6B-4E2A-9959-4567725D6E4F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AC92808C-EC6B-4E2A-9959-4567725D6E4F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AC92808C-EC6B-4E2A-9959-4567725D6E4F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{60C9DD35-2ABC-4FFD-8F05-4D3025676122}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{60C9DD35-2ABC-4FFD-8F05-4D3025676122}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{60C9DD35-2ABC-4FFD-8F05-4D3025676122}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{60C9DD35-2ABC-4FFD-8F05-4D3025676122}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
