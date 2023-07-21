@@ -5,7 +5,7 @@ namespace EventsSample
     public class FilesSearcher :IDisposable
     {
 
-        private event EventHandler<FileArgs> FileFound;
+        public event EventHandler<FileArgs> FileFound;
 
         public FilesSearcher()
         {
@@ -92,8 +92,20 @@ namespace EventsSample
 
         public void Dispose()
         {
-            FileFound -= (_, args) => FileFoundEvent(args);
+            UnsubscribeAll();
             GC.SuppressFinalize(this);
+        }
+
+        /// <summary>
+        /// Отписаться от всех событий
+        /// </summary>
+        private void UnsubscribeAll()
+        {
+            if (FileFound != null)
+            {
+                FileFound = (EventHandler<FileArgs>)Delegate.RemoveAll(FileFound, FileFound);
+            }
+
         }
     }
 }
